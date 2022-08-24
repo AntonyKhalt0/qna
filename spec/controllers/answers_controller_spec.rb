@@ -30,10 +30,10 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #update' do
     context 'with valid attributes' do
       it 'saved a edit answer' do
-        patch :update, params: { id: answer, question_id: question.id, answer: { body: 'new body' } }
+        patch :update, params: { id: answer, question_id: question.id, answer: { body: 'AnswerBody' } }
         answer.reload
 
-        expect(answer.body).to eq 'new body'
+        expect(answer.body).to eq 'AnswerBody'
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'does not saved edit answer' do
         answer.reload
 
-        expect(answer.body).to eq 'MyText'
+        expect(answer.body).to eq 'AnswerBody'
       end
     end
 
