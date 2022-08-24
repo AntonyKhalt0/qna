@@ -3,4 +3,4 @@ tr
 tr  
   = question.body
 
-p= link_to 'Delete', question_path(question), method: delete if current_user.owner?(question)
+p= link_to 'Delete', question_path(question), method: :delete if question.author == current_user

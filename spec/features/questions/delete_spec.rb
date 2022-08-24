@@ -8,6 +8,7 @@ feature 'User can create question', %q{
 
   given!(:user) { create(:user) }
   given!(:question) { create(:question, author: user) }
+  given(:another_user) { create(:user) }
 
   scenario 'Authenticated user delete him quesiton' do
     sign_in(user)
@@ -17,5 +18,10 @@ feature 'User can create question', %q{
     expect(page).to have_content 'Questions'
   end
 
-  scenario 'Authenticated user delete not him quesiton'
+  scenario 'Authenticated user delete not him quesiton' do
+    sign_in(another_user)
+    visit questions_path
+
+    expect(page).to_not have_content 'Delete'
+  end
 end
