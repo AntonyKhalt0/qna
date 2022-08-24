@@ -1,8 +1,14 @@
 class AnswersController < ApplicationController
-  def create
-    @answer = question.answers.build(answer_params).save
+  before_action :authenticate_user!
 
-    redirect_to question_path(question)
+  def create
+    @answer = question.answers.build(answer_params)
+
+    if @answer.save
+      redirect_to question_path(question), notice: 'Your answer successfully posted.'
+    else
+      render 'questions/show', locals: { question: question }
+    end
   end
 
   def update
