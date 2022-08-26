@@ -1,7 +1,21 @@
-h1= @question.title
-p= @question.body
+.question
+  h1 id='question-title'= @question.title
+  p id='question-body'= @question.body
+
+  - if user_signed_in? && current_user == @question.author
+    p= link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id } 
+
+  = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" }, local: false do |f|
+    = f.label :title
+    = f.text_field :title
+    = f.label :body
+    = f.text_area :body
+    = f.submit 'Save'
 
 .answers
   = render @question.answers
+
+.question-errors
+  = render 'shared/errors', resource: @question
 
 = render 'answers/form'
