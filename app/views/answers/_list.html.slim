@@ -1,6 +1,0 @@
-table
-  - @question.answers.each do |answer|
-    tr
-      td= answer.body
-    tr
-      td= link_to 'Delete', answer_path(answer), method: :delete if answer.author == current_user

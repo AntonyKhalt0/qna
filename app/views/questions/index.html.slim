@@ -1,4 +1,8 @@
 h1= 'Questions'
+
+- @questions.each do |q|
+  p= link_to q.title, q
+
 table
   = render @questions
 p= link_to 'Ask question', new_question_path
