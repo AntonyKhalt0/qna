@@ -8,13 +8,12 @@ class AnswersController < ApplicationController
   end
 
   def update
-    answer.update(answer_params) if current_user == answer.author
+    answer.update(answer_params) if user_author?
     @question = answer.question
   end
 
   def destroy
-    answer.destroy
-    redirect_to question_path(answer.question.id)
+    answer.destroy if user_author?
   end
 
   private
@@ -29,5 +28,9 @@ class AnswersController < ApplicationController
 
   def question
     @question ||= Question.find(params[:question_id])
+  end
+
+  def user_author?
+    current_user == answer.author
   end
 end

@@ -1,9 +1,12 @@
-p= answer.body
+div id="answer-body-#{answer.id}"
+  p= answer.body
 
-- if user_signed_in? && current_user == answer.author
-  p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+  - if user_signed_in? && current_user == answer.author
+    p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+    p= link_to 'Delete', answer_path(answer), method: :delete, local: false, remote: true, class: 'delete-answer-link', data: { answer_id: answer.id }
+    p= link_to 'Best answer', update_best_answer_question_path(answer.question, answer_id: answer.id), class: 'best-answer-link', data: { answer_id: answer.id }, local: false, method: :patch, action: :update_best_answer, remote: true
 
-= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-  = f.label :body, 'Your answer'
-  = f.text_area :body
-  = f.submit 'Save'
+  = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+    = f.label :body, 'Your answer'
+    = f.text_area :body
+    = f.submit 'Save'

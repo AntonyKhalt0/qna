@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, author: user) }
+  let(:answer) { create(:answer, question_id: question.id, author: user)}
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3, author: user)}
@@ -87,7 +88,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'resirects to updated question' do
         patch :update, params: { id: question, question: attributes_for(:question) }
-        expect(response).to redirect_to question
+        expect(response).to render_template :update
       end
     end
 
@@ -107,6 +108,19 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #update_best_answer', js: true do
+    before { login(user) }
+    let!(:question) { create(:question, author: user) }
+    let!(:answers) { create_list(:answer, 3, question_id: question.id, author: user) }
+
+    it 'make best answer' do
+      patch :update_best_answer, params: { id: question, question: { best_answer_id: answers[0].id } }, format: :js
+      question.reload
+
+      expect(question.best_answer).to eq answer[0]
+    end
+  end
+  
   describe 'DELETE #destroy' do
     before { login(user) }
     let!(:question) { create(:question, author: user) }

@@ -5,5 +5,7 @@ Rails.application.routes.draw do
   
   resources :questions do
     resources :answers, shallow: true, only: [:create, :update, :destroy]
+
+    patch :update_best_answer, on: :member
   end
 end
