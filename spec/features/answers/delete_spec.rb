@@ -11,12 +11,14 @@ feature 'User can create question', %q{
   given!(:answer) { create(:answer, question_id: question.id, author: user) }
   given(:another_user) { create(:user) }
 
-  scenario 'Authenticated user delete him answer' do
+  scenario 'Authenticated user delete him answer', js: true do
     sign_in(user)
     visit question_path(question)
     click_on 'Delete'
 
-    expect(page).to_not have_content answer.body
+    within '.answers' do
+      expect(page).to_not have_content answer.body
+    end
   end
 
   scenario 'Authenticated user delete not him answer' do

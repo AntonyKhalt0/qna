@@ -1,0 +1,12 @@
+div id="answer-body-#{@best_answer.id}"
+  h3= 'Best answer this question'
+  h4= @best_answer.body
+
+  - if user_signed_in? && current_user == @best_answer.author
+    p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: @best_answer.id }
+    p= link_to 'Delete', answer_path(@best_answer), method: :delete, local: false, remote: true, class: 'delete-answer-link', data: { answer_id: @best_answer.id }
+    
+  = form_with model: @best_answer, class: 'hidden', html: { id: "edit-answer-#{@best_answer.id}" } do |f|
+    = f.label :body, 'Your answer'
+    = f.text_area :body
+    = f.submit 'Save'

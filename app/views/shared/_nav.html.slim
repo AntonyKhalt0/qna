@@ -1,5 +1,7 @@
 nav class="navbar navbar-light bg-light"
   span class="navbar-text"
+    = link_to 'Qna', questions_path
+    = ' | '
     - if user_signed_in?
       = link_to 'Sign out', destroy_user_session_path, method: :delete 
     - else
