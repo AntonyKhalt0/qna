@@ -8,4 +8,6 @@ Rails.application.routes.draw do
 
     patch :update_best_answer, on: :member
   end
+
+  resources :attachments, only: :destroy
 end
