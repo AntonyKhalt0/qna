@@ -10,6 +10,9 @@ div id="answer-body-#{@best_answer.id}"
         = link_to attachment_path(file), method: :delete, local: false, remote: true do
           = octicon 'x'
 
+  .links
+    = render 'links/list', resource: @best_question
+
   - if user_signed_in? && current_user == @best_answer.author
     p
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: @best_answer.id }
@@ -23,4 +26,11 @@ div id="answer-body-#{@best_answer.id}"
     p
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true
+    p Links:
+    #links
+      = f.fields_for :links do |l|
+        = render 'links/link_fields', f: l
+      .links
+        = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+        
     = f.submit 'Save'

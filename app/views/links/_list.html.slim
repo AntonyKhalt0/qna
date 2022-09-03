@@ -1,0 +1,9 @@
+p Links:
+ul
+  - resource.links.each do |link|
+    p id="link-#{link.id}"
+      - if link.gist?
+        = javascript_include_tag link.url+".js"
+      - else
+        li= link_to link.name, link.url
+      = link_to 'x', link_path(link), method: :delete, local: false, remote: true

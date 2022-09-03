@@ -15,6 +15,13 @@
     p
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true
+    p Links:
+    #links
+      = f.fields_for :links do |l|
+        = render 'links/link_fields', f: l
+      .links
+        = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+  
     = f.submit 'Save'
 
 .question-files
@@ -27,6 +34,9 @@
           = link_to attachment_path(file), method: :delete, local: false, remote: true do
             = octicon 'x'
 
+.links
+  = render 'links/list', resource: @question
+
 .best-answer
   = render 'answers/best_answer', resource: @best_answer if @best_answer
 
@@ -36,4 +46,4 @@
 .question-errors
   = render 'shared/errors', resource: @question
 
-= render 'answers/form'
+= render 'answers/form', resource: [@question, @answer]
