@@ -11,7 +11,7 @@ div id="answer-body-#{@best_answer.id}"
           = octicon 'x'
 
   .links
-    = render 'links/list', resource: @best_question
+    = render 'links/list', resource: @best_answer
 
   - if user_signed_in? && current_user == @best_answer.author
     p

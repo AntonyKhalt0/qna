@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.links.new
+    @question.build_award
   end
 
   def edit
@@ -39,6 +40,7 @@ class QuestionsController < ApplicationController
   def update_best_answer
     @question.set_best_answer(params[:answer_id])
     @best_answer = @question.best_answer
+    @question.award.give_out_to(@best_answer.author) if @question.award.present?
     @answers = @question.answers.where.not(id: @question.best_answer_id)
   end
 
@@ -55,6 +57,7 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, 
-                                      files: [], links_attributes: [:id, :name, :url, :_destroy])
+                                      files: [], links_attributes: [:id, :name, :url, :_destroy],
+                                      award_attributes: [:id, :title, :image])
   end
 end
