@@ -12,8 +12,7 @@ feature 'User can view question', %q{
     visit questions_path
 
     expect(page).to have_link 'Ask question', href: new_question_path
-    expect(page).to have_content 'MyString', count: 6
-    expect(page).to have_content 'MyText', count: 3
+    expect(page).to have_content 'MyQuestionTitle', count: 3
   end
 
 end

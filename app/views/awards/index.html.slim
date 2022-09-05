@@ -1,0 +1,11 @@
+h1 Awards
+table
+  tr
+    th Question
+    th Image
+    th Award
+  tr
+    - @awards.each do |award|
+      td= award.question.title
+      td= image_tag(award.image, size: 75)
+      td= award.title

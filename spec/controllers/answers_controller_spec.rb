@@ -11,7 +11,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with valid attributes' do
       it 'saved a new answer for question in database' do
-        expect { post :create, params: { answer: attributes_for(:answer), question_id: question.id, format: :js } }.to change(Answer, :count).by(1)
+        expect { post :create, params: { answer: attributes_for(:answer), question_id: question.id}, format: :js }.to change(Answer, :count).by(1)
       end
     end
 
@@ -60,12 +60,12 @@ RSpec.describe AnswersController, type: :controller do
     let!(:answer) { create(:answer, question_id: question.id, author: user) }
 
     it 'deletes the answer' do
-      expect { delete :destroy, params: { id: answer, question_id: question.id } }.to change(Answer, :count).by(-1)
+      expect { delete :destroy, params: { id: answer, question_id: question.id }, format: :js }.to change(Answer, :count).by(-1)
     end
 
     it 'redirects to question' do
-      delete :destroy, params: { id: answer, question_id: question.id }
-      expect(response).to redirect_to question
+      delete :destroy, params: { id: answer, question_id: question.id }, format: :js
+      expect(response).to render_template :destroy
     end
   end
 end

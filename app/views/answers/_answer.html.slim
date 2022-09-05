@@ -8,15 +8,18 @@ div id="answer-body-#{answer.id}"
       - if answer.author == current_user
         = link_to attachment_path(file), method: :delete, local: false, remote: true do
           = octicon 'x'
+  
+  .links
+    = render 'links/list', resource: answer
 
-
-  - if user_signed_in? && current_user == answer.author
-    p
+  - if user_signed_in?
+    -  if current_user == answer.question.author
+      = link_to 'Best answer', update_best_answer_question_path(answer.question, answer_id: answer.id), class: 'best-answer-link', data: { answer_id: answer.id }, local: false, method: :patch, action: :update_best_answer, remote: true
+      = ' | '
+    - if current_user == answer.author
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       = ' | '
-      = link_to 'Delete', answer_path(answer), method: :delete, local: false, remote: true, class: 'delete-answer-link', data: { answer_id: answer.id }
-      = ' | '
-      = link_to 'Best answer', update_best_answer_question_path(answer.question, answer_id: answer.id), class: 'best-answer-link', data: { answer_id: answer.id }, local: false, method: :patch, action: :update_best_answer, remote: true
+      = link_to 'Delete', answer_path(answer), method: :delete, local: false, remote: true, class: 'delete-answer-link', data: { answer_id: answer.id }  
 
   = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
     p
@@ -25,4 +28,11 @@ div id="answer-body-#{answer.id}"
     p
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true
+    p Links:
+    #links
+      = f.fields_for :links do |l|
+        = render 'links/link_fields', f: l
+      .links
+        = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+        
     = f.submit 'Save'

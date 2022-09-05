@@ -1,11 +1,17 @@
 .answer-errors
   = render 'shared/errors', resource: @answer
 
-= form_with model: [@question, @question.answers.build], class: 'new-answer', local: false do |f|
+= form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
   p
-    = f.label :body
+    = f.label :body, 'Your answer'
     = f.text_area :body
   p
     = f.label :files
     = f.file_field :files, multiple: true, direct_upload: true
+  p Links:
+  #links
+    = f.fields_for :links do |l|
+      = render 'links/link_fields', f: l
+    .links
+      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
   = f.submit 'Post answer'
