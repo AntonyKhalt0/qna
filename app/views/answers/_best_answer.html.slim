@@ -10,6 +10,8 @@ div id="answer-body-#{@best_answer.id}"
         = link_to attachment_path(file), method: :delete, local: false, remote: true do
           = octicon 'x'
 
+  p= render 'votes/vote', resource: @best_answer
+
   .links
     = render 'links/list', resource: @best_answer
 

@@ -8,7 +8,9 @@ div id="answer-body-#{answer.id}"
       - if answer.author == current_user
         = link_to attachment_path(file), method: :delete, local: false, remote: true do
           = octicon 'x'
-  
+
+  p= render 'votes/vote', resource: answer
+
   .links
     = render 'links/list', resource: answer
 

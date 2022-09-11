@@ -7,4 +7,8 @@ class User < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :awards, dependent: :destroy
+
+  def author?(resource)
+    self == resource.author
+  end
 end
