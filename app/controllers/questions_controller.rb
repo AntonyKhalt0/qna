@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  include Voted
+  
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:show, :edit, :update, :update_best_answer, :destroy]
 
@@ -34,7 +36,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user == @question.author
+    @question.update(question_params) if current_user.author?(@question)
   end
 
   def update_best_answer

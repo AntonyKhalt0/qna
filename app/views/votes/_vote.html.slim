@@ -1,0 +1,8 @@
+.votes
+  div id="rating-#{resource.id}-#{resource.class.name.downcase}"= resource.rating
+  = link_to 'Like', polymorphic_path(resource, action: :upvote), method: :patch, remote: true, data: { type: :json }
+  = ' | '
+  = link_to 'Dislike', polymorphic_path(resource, action: :downvote), method: :patch, remote: true, data: { type: :json }
+  = ' | '
+  = link_to 'Unvote', polymorphic_path(resource, action: :unvote), method: :delete, remote: true, data: { type: :json }
+  div id="errors-#{resource.id}-#{resource.class.name.downcase}"

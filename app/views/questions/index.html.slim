@@ -1,7 +1,9 @@
 h1= 'Questions'
 
 - @questions.each do |q|
-  h4= link_to q.title, q
-  p= link_to 'Delete', question_path(q), method: :delete if q.author == current_user
+  div id="question-#{q.id}"
+    h4= link_to q.title, q
+    p= render 'votes/vote', resource: q
+    p= link_to 'Delete', question_path(q), method: :delete if q.author == current_user
 
 p= link_to 'Ask question', new_question_path
