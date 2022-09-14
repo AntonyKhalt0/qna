@@ -1,24 +1,11 @@
 div id="answer-body-#{answer.id}"
-  p= answer.body
-
-  - answer.files.each do |file|
-    p id="attachment-#{file.id}"
-      = link_to file.filename.to_s, url_for(file)
-      = ' '
-      - if answer.author == current_user
-        = link_to attachment_path(file), method: :delete, local: false, remote: true do
-          = octicon 'x'
-
-  p= render 'votes/vote', resource: answer
-
-  .links
-    = render 'links/list', resource: answer
+  = render 'answers/answer_body', answer: answer  
 
   - if user_signed_in?
-    -  if current_user == answer.question.author
+    -  if current_user.author?(answer.question)
       = link_to 'Best answer', update_best_answer_question_path(answer.question, answer_id: answer.id), class: 'best-answer-link', data: { answer_id: answer.id }, local: false, method: :patch, action: :update_best_answer, remote: true
       = ' | '
-    - if current_user == answer.author
+    - if current_user.author?(answer)
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       = ' | '
       = link_to 'Delete', answer_path(answer), method: :delete, local: false, remote: true, class: 'delete-answer-link', data: { answer_id: answer.id }  

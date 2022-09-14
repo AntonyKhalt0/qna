@@ -3,10 +3,10 @@ $(function() {
 
   App.cable.subscriptions.create('QuestionsChannel', {
     connected: function() {
-      this.perform('follow')
-    }
-
-    disconnected: function() {}
+      this.perform('follow');
+    },
+    
+    disconnected: function() {},
     
     received: function(data) {
       questionsList.append(data);

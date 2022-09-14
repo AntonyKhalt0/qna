@@ -6,16 +6,8 @@ class AnswersController < ApplicationController
   def create
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
-
-    respond_to do |format|
-      if @answer.save
-        format.json { render json: @answer }
-      else
-        format.json do 
-          render json: @answer.errors.full_messages, status: :unprocessable_entity
-        end
-      end
-    end
+    @answer.save
+    publish_answer
   end
 
   def update
@@ -39,5 +31,15 @@ class AnswersController < ApplicationController
 
   def question
     @question ||= Question.find(params[:question_id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast("questions-#{question.id}-answers", ApplicationController.render(
+        partial: 'answers/answer_body',
+        locals: { answer: @answer }
+      )      
+    )
   end
 end
