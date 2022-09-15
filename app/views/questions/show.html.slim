@@ -33,12 +33,19 @@
       p id="attachment-#{file.id}"
         = link_to file.filename.to_s, url_for(file)
         = ' '
-        - if @question.author == current_user
+        - if current_user.author?(@question)
           = link_to attachment_path(file), method: :delete, local: false, remote: true do
             = octicon 'x'
 
 .links
   = render 'links/list', resource: @question
+
+div class="question-#{@question.id}-comments"
+  = 'Comments:'
+  .comments
+    = render @question.comments
+  - if signed_in?
+    = render 'comments/question_comment_form', question: @question
 
 .best-answer
   = render 'answers/best_answer', resource: @best_answer if @best_answer

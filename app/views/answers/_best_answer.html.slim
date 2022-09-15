@@ -36,3 +36,10 @@ div id="answer-body-#{@best_answer.id}"
         = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
         
     = f.submit 'Save'
+
+div class="answer-#{@best_answer.id}-comments"
+  = 'Comments:'
+  .comments
+    = render @best_answer.comments
+  - if user_signed_in?
+    = render 'comments/answer_comment_form', answer: answer

@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   end
 
   concern :commentable do
-    post :comment_create
+    member do
+      post :create_comment
+    end
   end
 
   resources :questions do
