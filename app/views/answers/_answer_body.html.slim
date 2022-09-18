@@ -1,0 +1,14 @@
+p= answer.body
+
+- answer.files.each do |file|
+  p id="attachment-#{file.id}"
+    = link_to file.filename.to_s, url_for(file)
+    = ' '
+    = link_to attachment_path(file), method: :delete, local: false, remote: true do
+      = octicon 'x'
+
+.votes
+  p= render 'votes/vote', resource: answer
+
+.links
+  = render 'links/list', resource: answer

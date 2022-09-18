@@ -1,0 +1,4 @@
+div id="question-#{question.id}"
+  h4= link_to question.title, question
+  p= render 'votes/vote', resource: question
+  

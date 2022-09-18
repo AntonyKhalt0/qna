@@ -1,0 +1,8 @@
+.create-comment-errors
+  = render 'shared/errors', resource: @comment
+
+= form_with model: answer.comments.new, url: create_comment_answer_path(answer), class: 'answer-new-comment', local: false do |f|
+  p
+    = f.label :body
+    = f.text_area :body
+  p= f.submit 'Comment'
