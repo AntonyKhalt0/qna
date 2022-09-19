@@ -184,6 +184,9 @@ GEM
     omniauth-oauth2 (1.7.3)
       oauth2 (>= 1.4, < 3)
       omniauth (>= 1.9, < 3)
+    omniauth-rails_csrf_protection (1.0.1)
+      actionpack (>= 4.2)
+      omniauth (~> 2.0)
     orm_adapter (0.5.0)
     pg (1.4.1)
     popper_js (2.11.5)
@@ -344,6 +347,7 @@ DEPENDENCIES
   octicons_helper
   omniauth
   omniauth-github
+  omniauth-rails_csrf_protection
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.5)

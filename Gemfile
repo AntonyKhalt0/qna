@@ -33,10 +33,13 @@ gem 'cocoon'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'slim-rails'
-gem 'devise'
 gem 'gon'
+
+# authentication
+gem 'devise'
 gem 'omniauth'
 gem 'omniauth-github'
+gem "omniauth-rails_csrf_protection"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
