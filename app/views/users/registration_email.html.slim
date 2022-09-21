@@ -1,0 +1,3 @@
+= form_for(User.new, :as => 'user', url: accounts_path) do |f|
+  = f.email_field :email
+  = f.submit 'Registration'
