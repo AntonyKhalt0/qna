@@ -4,8 +4,8 @@ class Question < ApplicationRecord
   
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
-  belongs_to :author, class_name: 'User', foreign_key: 'author_id'
-  belongs_to :best_answer, class_name: 'Answer', foreign_key: 'best_answer_id', optional: true
+  belongs_to :author, class_name: 'User', foreign_key: 'author_id', dependent: :destroy
+  belongs_to :best_answer, class_name: 'Answer', foreign_key: 'best_answer_id', optional: true, dependent: :destroy
   
   has_one :award, dependent: :destroy
 
