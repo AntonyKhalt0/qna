@@ -6,7 +6,7 @@ div id="answer-body-#{@best_answer.id}"
     p id="attachment-#{file.id}"
       = link_to file.filename.to_s, url_for(file)
       = ' '
-      - if @best_answer.author == current_user
+      - if can?(:edit, @best_answer)
         = link_to attachment_path(file), method: :delete, local: false, remote: true do
           = octicon 'x'
 
@@ -15,7 +15,7 @@ div id="answer-body-#{@best_answer.id}"
   .links
     = render 'links/list', resource: @best_answer
 
-  - if user_signed_in? && current_user == @best_answer.author
+  - if can?(:edit, @best_answer)
     p
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: @best_answer.id }
       = ' | '
@@ -41,5 +41,5 @@ div class="answer-#{@best_answer.id}-comments"
   = 'Comments:'
   .comments
     = render @best_answer.comments
-  - if user_signed_in?
-    = render 'comments/answer_comment_form', answer: answer
+  - if can?(:create, Comment)
+    = render 'comments/answer_comment_form', answer: @best_answer
