@@ -34,6 +34,7 @@ gem 'cocoon'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'slim-rails'
 gem 'gon'
+gem 'cancancan'
 
 # authentication
 gem 'devise'

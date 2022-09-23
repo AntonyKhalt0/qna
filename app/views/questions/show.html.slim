@@ -2,7 +2,7 @@
   h1 id='question-title'= @question.title
   p id='question-body'= @question.body
 
-  - if user_signed_in? && current_user.author?(@question)
+  - if can?(:edit, @question)
     p
       = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id } 
       = ' | '
@@ -33,7 +33,7 @@
       p id="attachment-#{file.id}"
         = link_to file.filename.to_s, url_for(file)
         = ' '
-        - if current_user.author?(@question)
+        - if can?(:edit, @question)
           = link_to attachment_path(file), method: :delete, local: false, remote: true do
             = octicon 'x'
 

@@ -2,10 +2,10 @@ div id="answer-body-#{answer.id}"
   = render 'answers/answer_body', answer: answer  
 
   - if user_signed_in?
-    -  if current_user.author?(answer.question)
+    -  if can?(:edit, answer.question)
       = link_to 'Best answer', update_best_answer_question_path(answer.question, answer_id: answer.id), class: 'best-answer-link', data: { answer_id: answer.id }, local: false, method: :patch, action: :update_best_answer, remote: true
       = ' | '
-    - if current_user.author?(answer)
+    - if can?(:edit, answer)
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       = ' | '
       = link_to 'Delete', answer_path(answer), method: :delete, local: false, remote: true, class: 'delete-answer-link', data: { answer_id: answer.id }  
@@ -30,5 +30,5 @@ div class="answer-#{answer.id}-comments"
   = 'Comments:'
   .comments
     = render answer.comments
-  - if user_signed_in?
+  - if can?(:create, Comment)
     = render 'comments/answer_comment_form', answer: answer

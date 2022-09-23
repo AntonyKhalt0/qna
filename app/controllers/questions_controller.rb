@@ -6,7 +6,10 @@ class QuestionsController < ApplicationController
   before_action :find_question, only: [:show, :edit, :update, :update_best_answer, :destroy]
   after_action :publish_question, only: [:create]
 
+  authorize_resource
+
   def index
+    #authorize! :read, Question
     @questions = Question.all
   end
 
@@ -39,7 +42,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.author?(@question)
+    @question.update(question_params)
   end
 
   def update_best_answer
