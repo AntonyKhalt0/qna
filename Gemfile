@@ -30,11 +30,13 @@ gem 'jquery-rails'
 gem 'octicons_helper'
 gem 'aws-sdk-s3'
 gem 'cocoon'
-# Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'slim-rails'
 gem 'gon'
 gem 'cancancan'
+gem 'doorkeeper', '~> 5.5.4'
+gem 'active_model_serializers'
+gem 'oj'
 
 # authentication
 gem 'devise'
