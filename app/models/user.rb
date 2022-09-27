@@ -3,8 +3,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :omniauthable, omniauth_providers: [:github, :vkontakte]
          
-  has_many :questions, dependent: :destroy
-  has_many :answers, dependent: :destroy
+  has_many :questions, foreign_key: :author_id, dependent: :destroy
+  has_many :answers, foreign_key: :author_id, dependent: :destroy
   has_many :awards, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :authorizations, dependent: :destroy

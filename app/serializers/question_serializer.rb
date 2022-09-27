@@ -1,9 +1,11 @@
 class QuestionSerializer < ActiveModel::Serializer
-  attributes :id, :title, :body, :created_at, :updated_at,
+  attributes :id, :title, :body, :created_at, :updated_at, :author_id,
              :best_answer_id, :award_id, :rating, :short_title
 
   has_many :answers
-  belongs_to :author
+  has_many :comments
+  has_many :links
+  belongs_to :author, class: 'User', foreign_key: 'author_id'
 
   def short_title
     object.title.truncate(7)
