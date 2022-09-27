@@ -20,7 +20,7 @@ end
 
 shared_examples_for 'API error response' do
   it 'return errors' do
-    do_request(method, api_path, params: { access_token: access_token.token, question: attributes_for(:question, :invalid) }, headers: headers)
+    do_request(method, api_path, params: { access_token: access_token.token, resource => attributes_for(resource, trait) }, headers: headers)
     expect(response.status).to eq 422
   end
 end

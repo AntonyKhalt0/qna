@@ -120,7 +120,10 @@ describe 'Questions API', type: :request do
             headers: headers }.to_not change(Question, :count)
         end
 
-        it_behaves_like 'API error response'
+        it_behaves_like 'API error response' do
+          let(:resource) { :question }
+          let(:trait) { :invalid }
+        end
       end
     end
   end
@@ -160,7 +163,10 @@ describe 'Questions API', type: :request do
         expect(question.title).to eq 'MyQuestionTitle'
       end
 
-      it_behaves_like 'API error response'
+      it_behaves_like 'API error response' do
+        let(:resource) { :question }
+        let(:trait) { :invalid }
+      end
     end
   end
 

@@ -23,9 +23,9 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   def update
     authorize! :update, question
     if question.update(question_params)
-      render json: @question
+      render json: question
     else
-      render json: { errors: @question.errors }, status: :unprocessable_entity
+      render json: { errors: question.errors }, status: :unprocessable_entity
     end
   end
 
