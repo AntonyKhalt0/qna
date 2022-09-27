@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe FindForOauthService do
@@ -8,7 +10,7 @@ RSpec.describe FindForOauthService do
 
   context 'user already has authorization' do
     it 'returns the user' do
-      user.authorizations.create(provider: 'facebook', uid: '123456') 
+      user.authorizations.create(provider: 'facebook', uid: '123456')
       expect(subject.call).to eq user
     end
   end

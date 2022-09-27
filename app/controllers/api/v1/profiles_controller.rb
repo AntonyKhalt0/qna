@@ -1,15 +1,23 @@
-class Api::V1::ProfilesController < Api::V1::BaseController
-	def index
-		render json: all_users_without_current
-	end
+# frozen_string_literal: true
 
-	def me
-		render json: current_resource_owner
-	end
+module Api
+  module V1
+    class ProfilesController < Api::V1::BaseController
+      authorize_resource class: 'User'
 
-	private
+      def index
+        render json: all_users_without_current
+      end
 
-	def all_users_without_current
-		@users = User.where.not(id: current_resource_owner.id)
-	end
+      def me
+        render json: current_resource_owner
+      end
+
+      private
+
+      def all_users_without_current
+        @users = User.where.not(id: current_resource_owner.id)
+      end
+    end
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
@@ -8,24 +10,27 @@ RSpec.describe AnswersController, type: :controller do
   before { sign_in user }
 
   describe 'POST #create' do
-
     context 'with valid attributes' do
       it 'saved a new answer for question in database' do
-        expect { post :create, params: { answer: attributes_for(:answer), question_id: question.id}, format: :js }.to change(Answer, :count).by(1)
+        expect do
+          post :create, params: { answer: attributes_for(:answer), question_id: question.id },
+                        format: :js
+        end.to change(Answer, :count).by(1)
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save answer' do
-        expect { post :create, params: {  answer: attributes_for(:answer, :invalid_body), 
-                                          question_id: question.id, 
-                                          format: :js }
-                                       }.to_not change(Answer, :count)
+        expect do
+          post :create, params: { answer: attributes_for(:answer, :invalid_body),
+                                  question_id: question.id,
+                                  format: :js }
+        end.to_not change(Answer, :count)
       end
     end
 
     it 'renders create template' do
-      post :create, params: { answer: attributes_for(:answer), question_id: question.id, format: :js } 
+      post :create, params: { answer: attributes_for(:answer), question_id: question.id, format: :js }
       expect(response).to render_template :create
     end
   end
@@ -60,7 +65,9 @@ RSpec.describe AnswersController, type: :controller do
     let!(:answer) { create(:answer, question_id: question.id, author: user) }
 
     it 'deletes the answer' do
-      expect { delete :destroy, params: { id: answer, question_id: question.id }, format: :js }.to change(Answer, :count).by(-1)
+      expect do
+        delete :destroy, params: { id: answer, question_id: question.id }, format: :js
+      end.to change(Answer, :count).by(-1)
     end
 
     it 'redirects to question' do

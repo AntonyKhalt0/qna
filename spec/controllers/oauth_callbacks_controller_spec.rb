@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe OauthCallbacksController, type: :controller do
   before do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
   describe 'Github' do
@@ -18,7 +20,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
     context 'user exists' do
       let!(:user) { create(:user) }
 
-      before do        
+      before do
         allow(User).to receive(:find_for_oauth).and_return(user)
         get :github
       end
@@ -33,7 +35,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
     end
 
     context 'user does not exist' do
-      before do        
+      before do
         allow(User).to receive(:find_for_oauth)
         get :github
       end
@@ -62,7 +64,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
     context 'user exists' do
       let!(:user) { create(:user) }
 
-      before do        
+      before do
         allow(User).to receive(:find_by_authorization).with(oauth_data).and_return(user)
         get :vkontakte
       end
@@ -77,7 +79,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
     end
 
     context 'user does not exist' do
-      before do        
+      before do
         allow(User).to receive(:find_by_authorization).with(oauth_data).and_return(nil)
         get :vkontakte
       end

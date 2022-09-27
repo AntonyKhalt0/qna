@@ -1,18 +1,18 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can create comment for answer', %q{
+feature 'User can create comment for answer', "
   In order to get comment from a community
   As an authenthicated user
   I'd like to be able to write my comment
-} do
-
+" do
   given(:user) { create(:user) }
   given(:question) { create(:question, author: user) }
   given!(:answer) { create(:answer, author: user, question: question) }
 
   describe 'Authenthicated user', js: true do
-
-    background do 
+    background do
       sign_in(user)
       visit question_path(question)
     end

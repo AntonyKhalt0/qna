@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
-  
+
   root to: 'questions#index'
 
   concern :votable do
@@ -19,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions do
-    resources :answers, shallow: true, only: [:create, :update, :destroy] do
+    resources :answers, shallow: true, only: %i[create update destroy] do
       concerns :votable
       concerns :commentable
     end
@@ -41,8 +43,8 @@ Rails.application.routes.draw do
         get :me, on: :collection
       end
 
-      resources :questions, only: [:index, :show, :create, :update, :destroy] do
-        resources :answers, only: [:show, :create, :update, :destroy], shallow: true
+      resources :questions, only: %i[index show create update destroy] do
+        resources :answers, only: %i[show create update destroy], shallow: true
       end
     end
   end

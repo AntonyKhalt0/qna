@@ -1,38 +1,36 @@
+# frozen_string_literal: true
+
 module Voted
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_votable, only: [:upvote, :downvote, :unvote]
+    before_action :set_votable, only: %i[upvote downvote unvote]
   end
 
   def upvote
     respond_to do |format|
-      begin vote(1)
-        format.json { render_json_success_vote }
-      rescue ActiveRecord::RecordInvalid
-        format.json { render_json_with_errors(@vote.errors.full_messages)}
-      end  
+      vote(1)
+      format.json { render_json_success_vote }
+    rescue ActiveRecord::RecordInvalid
+      format.json { render_json_with_errors(@vote.errors.full_messages) }
     end
-    
   end
 
   def downvote
     respond_to do |format|
-      begin vote(-1)
-        format.json { render_json_success_vote }
-      rescue ActiveRecord::RecordInvalid
-        format.json { render_json_with_errors(@vote.errors.full_messages)}
-      end  
+      vote(-1)
+      format.json { render_json_success_vote }
+    rescue ActiveRecord::RecordInvalid
+      format.json { render_json_with_errors(@vote.errors.full_messages) }
     end
   end
 
   def unvote
     respond_to do |format|
-      begin @votable.cancel(current_user)
-        format.json { render_json_success_vote }
-      rescue ActiveRecord::RecordInvalid
-        format.json { render_json_with_errors }
-      end
+      @votable.cancel(current_user)
+      format.json { render_json_success_vote }
+    rescue ActiveRecord::RecordInvalid
+      format.json { render_json_with_errors }
     end
   end
 
@@ -41,18 +39,18 @@ module Voted
   def render_json_success_vote
     @votable.reload
 
-    render json: { 
-        resource: @votable.class.name.downcase,
-        id: @votable.id,
-        rating: @votable.rating
-      }
+    render json: {
+      resource: @votable.class.name.downcase,
+      id: @votable.id,
+      rating: @votable.rating
+    }
   end
 
   def render_json_with_errors(errors)
-    render json: { 
+    render json: {
       errors: errors,
       resource: @votable.class.name.downcase,
-      id: @votable.id, 
+      id: @votable.id
     }, status: :unprocessable_entity
   end
 

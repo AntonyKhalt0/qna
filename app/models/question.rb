@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class Question < ApplicationRecord
   include Votable
   include Commentable
-  
+
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
   belongs_to :author, class_name: 'User', foreign_key: 'author_id', dependent: :destroy
   belongs_to :best_answer, class_name: 'Answer', foreign_key: 'best_answer_id', optional: true, dependent: :destroy
-  
+
   has_one :award, dependent: :destroy
 
   has_many_attached :files

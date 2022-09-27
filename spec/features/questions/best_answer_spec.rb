@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can choose the best answer', %q{
+feature 'User can choose the best answer', "
   In order to get best answer from a community
   As an question author
   I'd like to be able to choose the best answer
-} do
-
+" do
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given(:question) { create(:question, author: user) }
@@ -36,7 +37,7 @@ feature 'User can choose the best answer', %q{
 
     scenario 'can choose the best answer' do
       click_on 'Best answer'
-    
+
       expect(page).to have_content 'Best answer this question'
     end
   end

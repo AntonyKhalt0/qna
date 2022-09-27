@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Commented
   extend ActiveSupport::Concern
 
@@ -31,15 +33,14 @@ module Commented
   end
 
   def publish_comment
-    ActionCable.server.broadcast("comments_#{question_id}", { 
-      message: ApplicationController.render(
-        partial: 'comments/comment',
-        locals: { comment: @comment }
-      ),
-      resource: @commentable.class.name.downcase,
-      id: @commentable.id
-      }      
-    )
+    ActionCable.server.broadcast("comments_#{question_id}", {
+                                   message: ApplicationController.render(
+                                     partial: 'comments/comment',
+                                     locals: { comment: @comment }
+                                   ),
+                                   resource: @commentable.class.name.downcase,
+                                   id: @commentable.id
+                                 })
   end
 
   def question_id

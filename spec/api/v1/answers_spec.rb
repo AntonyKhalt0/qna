@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Answers API', type: :request do
-  let(:headers) { { "ACCEPT" => 'application/json' } }
-  let(:user) { create(:user)}
+  let(:headers) { { 'ACCEPT' => 'application/json' } }
+  let(:user) { create(:user) }
   let(:question) { create(:question, author: user) }
 
   describe 'GET /api/v1/answers/:id' do
@@ -46,13 +48,19 @@ describe 'Answers API', type: :request do
     context 'authorized' do
       context 'with valid attributes' do
         it 'successfully save new answer in database' do
-          expect { post api_path,
-            params: { access_token: access_token.token, question_id: question.id, answer: attributes_for(:answer) },
-            headers: headers }.to change(Answer, :count).by(1)
+          expect do
+            post api_path,
+                 params: { access_token: access_token.token, question_id: question.id,
+                           answer: attributes_for(:answer) },
+                 headers: headers
+          end.to change(Answer, :count).by(1)
         end
 
         context 'return answer json' do
-          before { post api_path, params: { access_token: access_token.token, question_id: question.id, answer: attributes_for(:answer) }, headers: headers }
+          before do
+            post api_path,
+                 params: { access_token: access_token.token, question_id: question.id, answer: attributes_for(:answer) }, headers: headers
+          end
 
           it_behaves_like 'API public fields' do
             let(:public_fields) { %w[body] }
@@ -64,9 +72,12 @@ describe 'Answers API', type: :request do
 
       context 'with invalid attributes' do
         it "don't save new answer in database" do
-          expect { post api_path,
-            params: { access_token: access_token.token, question_id: question.id, answer: attributes_for(:answer, :invalid_body) },
-            headers: headers }.to_not change(Answer, :count)
+          expect do
+            post api_path,
+                 params: { access_token: access_token.token, question_id: question.id,
+                           answer: attributes_for(:answer, :invalid_body) },
+                 headers: headers
+          end.to_not change(Answer, :count)
         end
 
         it_behaves_like 'API error response' do
@@ -87,14 +98,18 @@ describe 'Answers API', type: :request do
 
     context 'authorized' do
       it 'successfully update answer' do
-        patch api_path, params: { access_token: access_token.token, id: answer.id, answer: { body: 'test body' } }, headers: headers
+        patch api_path, params: { access_token: access_token.token, id: answer.id, answer: { body: 'test body' } },
+                        headers: headers
         answer.reload
 
         expect(answer.body).to eq 'test body'
       end
 
       context 'return answer json' do
-        before { patch api_path, params: { access_token: access_token.token, id: answer.id, answer: { body: 'test body' } }, headers: headers }
+        before do
+          patch api_path, params: { access_token: access_token.token, id: answer.id, answer: { body: 'test body' } },
+                          headers: headers
+        end
 
         it_behaves_like 'API public fields' do
           let(:public_fields) { %w[body] }
@@ -106,7 +121,8 @@ describe 'Answers API', type: :request do
 
     context 'unauthorized' do
       it 'dont update answer' do
-        patch api_path, params: { access_token: access_token.token, id: answer.id, answer: attributes_for(:answer) }, headers: headers
+        patch api_path, params: { access_token: access_token.token, id: answer.id, answer: attributes_for(:answer) },
+                        headers: headers
         answer.reload
 
         expect(answer.body).to eq 'AnswerBody'
@@ -133,17 +149,21 @@ describe 'Answers API', type: :request do
     context 'authorized' do
       context 'answers author' do
         it 'successfully delete answer' do
-          expect { delete api_path,
-            params: { access_token: user_access_token.token, question_id: question.id, id: answer },
-            headers: headers }.to change(Answer, :count).by(-1)
+          expect do
+            delete api_path,
+                   params: { access_token: user_access_token.token, question_id: question.id, id: answer },
+                   headers: headers
+          end.to change(Answer, :count).by(-1)
         end
       end
 
       context 'not question author' do
         it 'dont successfully delete answer' do
-          expect { delete api_path,
-            params: { access_token: other_access_token.token, question_id: question.id, id: answer },
-            headers: headers }.to_not change(Answer, :count)
+          expect do
+            delete api_path,
+                   params: { access_token: other_access_token.token, question_id: question.id, id: answer },
+                   headers: headers
+          end.to_not change(Answer, :count)
         end
       end
     end

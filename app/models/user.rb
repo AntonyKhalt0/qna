@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :omniauthable, omniauth_providers: [:github, :vkontakte]
-         
+         :confirmable, :omniauthable, omniauth_providers: %i[github vkontakte]
+
   has_many :questions, foreign_key: :author_id, dependent: :destroy
   has_many :answers, foreign_key: :author_id, dependent: :destroy
   has_many :awards, dependent: :destroy
@@ -14,7 +16,7 @@ class User < ApplicationRecord
   end
 
   def self.find_for_oauth(auth)
-    FindForOauthService.new(auth).call    
+    FindForOauthService.new(auth).call
   end
 
   def self.find_by_authorization(auth)
@@ -22,7 +24,7 @@ class User < ApplicationRecord
   end
 
   def create_authorization(auth)
-    self.authorizations.create(provider: auth[:provider], uid: auth[:uid].to_s)
+    authorizations.create(provider: auth[:provider], uid: auth[:uid].to_s)
   end
 
   def self.build_vkontakte_auth_hash(auth)

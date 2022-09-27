@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can edit question', %q{
+feature 'User can edit question', "
   In order to correct mistakes
   As an author of question
   I'd like to be able to edit my question
-} do
+" do
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given!(:question) { create(:question, author: user) }
