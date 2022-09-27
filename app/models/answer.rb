@@ -10,6 +10,5 @@ class Answer < ApplicationRecord
   
   accepts_nested_attributes_for :links, reject_if: :all_blank
 
-  validates :body, presence: true
-  validates :question_id, presence: true
+  validates :body, :question_id, :rating, presence: true
 end
