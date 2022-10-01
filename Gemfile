@@ -40,6 +40,9 @@ gem 'octicons_helper'
 gem 'oj'
 gem 'rubocop-rails', require: false
 gem 'slim-rails'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'whenever', require: false
 
 # authentication
 gem 'devise'

@@ -15,4 +15,14 @@ RSpec.describe Question, type: :model do
   it_behaves_like 'Commentable'
   it_behaves_like 'Votable'
   it_behaves_like 'Author'
+
+  describe 'reputation' do
+    let(:user) { build(:user) }
+    let(:question) { build(:question, author: user) }
+
+    it 'calls Reputation#calculate' do
+      expect(ReputationJob).to receive(:perform_later).with(question)
+      question.save!
+    end
+  end
 end
