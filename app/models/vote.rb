@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 class Vote < ApplicationRecord
   belongs_to :votable, polymorphic: true
   belongs_to :user
 
-  validates :user, uniqueness: { scope: %i[votable_id votable_type], message: 'you can vote only once' }
+  validates :user, uniqueness: { scope: [:votable_id, :votable_type], message: 'you can vote only once'}
 
   validate :authorship
 

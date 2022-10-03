@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 describe Ability do
@@ -33,10 +31,10 @@ describe Ability do
     context 'Question' do
       it { should be_able_to :create, Question }
       it { should be_able_to :create_comment, Question }
-      it { should be_able_to %i[update destroy], create(:question, author: user) }
-      it { should_not be_able_to %i[update destroy], create(:question, author: other_user) }
+      it { should be_able_to [:update, :destroy], create(:question, author: user) }      
+      it { should_not be_able_to [:update, :destroy], create(:question, author: other_user) }
       it { should be_able_to :update_best_answer, create(:question, author: user) }
-      it { should be_able_to %i[upvote downvote unvote], create(:question, author: user) }
+      it { should be_able_to [:upvote, :downvote, :unvote], create(:question, author: user)}
     end
 
     context 'Answer' do
@@ -44,9 +42,9 @@ describe Ability do
 
       it { should be_able_to :create, Answer }
       it { should be_able_to :create_comment, Answer }
-      it { should be_able_to %i[update destroy], create(:answer, question: question, author: user) }
-      it { should_not be_able_to %i[update destroy], create(:answer, question: question, author: other_user) }
-      it { should be_able_to %i[upvote downvote unvote], create(:answer, author: user, question: question) }
+      it { should be_able_to [:update, :destroy], create(:answer, question: question, author: user) }
+      it { should_not be_able_to [:update, :destroy], create(:answer, question: question, author: other_user) }
+      it { should be_able_to [:upvote, :downvote, :unvote], create(:answer, author: user, question: question)}
     end
   end
 end

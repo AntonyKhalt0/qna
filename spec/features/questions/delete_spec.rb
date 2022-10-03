@@ -1,12 +1,11 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
-feature 'User can create question', "
+feature 'User can create question', %q{
   In order to get answer from a community
   As an authenthicated user
   I'd like to be able to ask the question
-" do
+} do
+
   given!(:user) { create(:user) }
   given!(:question) { create(:question, author: user) }
   given(:another_user) { create(:user) }

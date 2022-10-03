@@ -1,14 +1,12 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, author: user) }
-  let(:answer) { create(:answer, question_id: question.id, author: user) }
+  let(:answer) { create(:answer, question_id: question.id, author: user)}
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 3, author: user) }
+    let(:questions) { create_list(:question, 3, author: user)}
 
     before { get :index }
 
@@ -34,7 +32,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'assigns a new link to answer' do
       expect(assigns(:answer).links.first).to be_a_new(Link)
-    end
+    end    
   end
 
   describe 'GET #new' do
@@ -74,9 +72,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save question' do
-        expect do
-          post :create, params: { question: attributes_for(:question, :invalid) }
-        end.to_not change(Question, :count)
+        expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
       end
 
       it 're-renders new view' do
@@ -111,7 +107,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with invalid attributes' do
       before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js }
 
-      it 'does not change question' do
+      it 'does not change question' do  
         question.reload
 
         expect(question.title).to eq 'MyQuestionTitle'
@@ -136,7 +132,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(question.best_answer).to eq answer[0]
     end
   end
-
+  
   describe 'DELETE #destroy' do
     before { login(user) }
     let!(:question) { create(:question, author: user) }

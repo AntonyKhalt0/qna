@@ -1,16 +1,14 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
-feature 'User can edit answer', "
+feature 'User can edit answer', %q{
   In order to correct mistakes
   As an author of answer
   I'd like to be able to edit my answer
-" do
+} do
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given!(:question) { create(:question, author: user) }
-  given!(:answer) { create(:answer, author: user, question: question) }
+  given!(:answer) { create(:answer, author: user, question: question)}
 
   scenario 'Unauthenthicated user can not edit answer' do
     visit question_path(question)
