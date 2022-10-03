@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 class AccountsController < ApplicationController
   def create
-    @user = User.find_for_oauth(create_user_data)
-
+    @user = User.find_for_oauth(create_user_data)    
+  
     if @user&.persisted?
       redirect_to root_path
     else

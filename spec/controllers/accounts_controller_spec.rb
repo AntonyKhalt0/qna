@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe AccountsController, type: :controller do
   describe 'POST #create' do
     let(:user) { create(:user) }
-
+  
     before do
       session['omniauth_data'] = {
         :provider => 'vkontakte',

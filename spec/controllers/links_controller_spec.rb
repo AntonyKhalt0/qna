@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe LinksController, type: :controller do
@@ -9,7 +7,7 @@ RSpec.describe LinksController, type: :controller do
     let(:link) { create(:link, linkable: question) }
 
     before do
-      login(user)
+     login(user)
     end
 
     it 'deletes the attachment link' do

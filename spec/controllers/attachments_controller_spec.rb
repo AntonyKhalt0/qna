@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe AttachmentsController, type: :controller do
@@ -8,15 +6,12 @@ RSpec.describe AttachmentsController, type: :controller do
     let!(:question) { create(:question, author: user) }
 
     before do
-      login(user)
-      question.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"), filename: 'rails_helper.rb')
+     login(user)
+     question.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"), filename: 'rails_helper.rb')
     end
 
     it 'deletes the attachment file' do
-      expect do
-        delete :destroy, params: { id: question.files.last.id },
-                         format: :js
-      end.to change(ActiveStorage::Attachment, :count).by(-1)
+      expect { delete :destroy, params: { id: question.files.last.id }, format: :js }.to change(ActiveStorage::Attachment, :count).by(-1)
     end
 
     it 'render destroy template' do
