@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can vote for the answer the like', %q{
+feature 'User can vote for the answer the like', "
   In order to express my opinion
   As an not answer author
   I'd like to be able to vote for answer
-} do
-
+" do
   given(:user) { create(:user) }
   given(:author) { create(:user) }
   given(:question) { create(:question, author: author) }
@@ -26,7 +27,7 @@ feature 'User can vote for the answer the like', %q{
     end
 
     scenario 'tries to vote for answer' do
-      within ".votes" do
+      within '.votes' do
         click_on 'Like'
 
         expect(page).to have_content '1'
@@ -34,7 +35,7 @@ feature 'User can vote for the answer the like', %q{
     end
 
     scenario 'tries to downvote for answer' do
-      within ".votes" do
+      within '.votes' do
         click_on 'Dislike'
 
         expect(page).to have_content '-1'
@@ -42,7 +43,7 @@ feature 'User can vote for the answer the like', %q{
     end
 
     scenario 'tries to unvote for answer' do
-      within ".votes" do
+      within '.votes' do
         click_on 'Like'
         click_on 'Unvote'
 

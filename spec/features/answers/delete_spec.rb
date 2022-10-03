@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can create question', %q{
+feature 'User can create question', "
   In order to delete written answer
   As an authenthicated user
   I'd like to be able to delete the answer
-} do
-
+" do
   given!(:user) { create(:user) }
   given(:question) { create(:question, author: user) }
   given!(:answer) { create(:answer, question_id: question.id, author: user) }

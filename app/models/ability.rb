@@ -7,10 +7,12 @@ class Ability
     guest_abilities
 
     return unless user.present?
+
     user_abilities(user)
 
     return unless user.admin?
-    admin_abilities      
+
+    admin_abilities
   end
 
   def guest_abilities
@@ -24,10 +26,12 @@ class Ability
     can :destroy, [Question, Answer], { author_id: user.id }
     can :update_best_answer, Question
     can :create_comment, [Question, Answer]
-    can [:upvote, :downvote, :unvote], [Question, Answer]
-  end 
+    can :me, User, user_id: user.id
+    can %i[create destroy], QuestionSubscription
+    can %i[upvote downvote unvote], [Question, Answer]
+  end
 
   def admin_abilities
-    can :manage, :all 
+    can :manage, :all
   end
 end

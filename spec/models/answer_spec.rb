@@ -1,15 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
-  it { should belong_to :author }
   it { should belong_to :question }
-  it { should have_many :links }
 
   it { should validate_presence_of :body }
   it { should validate_presence_of :question_id }
   it { should validate_presence_of :rating }
-  
+
   it { should have_db_index :question_id }
 
-  it { should accept_nested_attributes_for :links }
+  it_behaves_like 'Attachmentable'
+  it_behaves_like 'Linkable'
+  it_behaves_like 'Commentable'
+  it_behaves_like 'Votable'
+  it_behaves_like 'Author'
 end

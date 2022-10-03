@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can sign in', %q{
+feature 'User can sign in', "
   In order to ask questions
   As an authenthicated user
   I'd like to be able to sign out
-} do
+" do
   given(:user) { create(:user) }
 
   background { sign_in(user) }
@@ -12,7 +14,7 @@ feature 'User can sign in', %q{
   scenario 'Authenthicated user tries to sign out' do
     visit root_path
     click_on 'Sign out'
-    
+
     expect(page).to have_content 'Signed out successfully.'
   end
 end

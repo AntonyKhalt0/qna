@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AttachmentsController, type: :controller do
@@ -7,8 +9,8 @@ RSpec.describe AttachmentsController, type: :controller do
     let(:awards) { create_list(:awards, 2, user_id: user.id) }
 
     before do
-     login(user)
-     get :index
+      login(user)
+      get :index
     end
 
     it 'get all awards' do

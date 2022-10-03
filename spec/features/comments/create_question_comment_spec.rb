@@ -1,23 +1,23 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can create comment for question', %q{
+feature 'User can create comment for question', "
   In order to get comment from a community
   As an authenthicated user
   I'd like to be able to write my comment
-} do
-
+" do
   given(:user) { create(:user) }
   given(:question) { create(:question, author: user) }
 
   describe 'Authenthicated user', js: true do
-
-    background do 
+    background do
       sign_in(user)
       visit question_path(question)
     end
 
     scenario 'write comment for question' do
-      within ".question-new-comment" do
+      within '.question-new-comment' do
         fill_in 'comment_body', with: 'Comment text'
         click_on 'Comment'
       end
@@ -38,7 +38,7 @@ feature 'User can create comment for question', %q{
       end
 
       Capybara.using_session('user') do
-        within ".question-new-comment" do
+        within '.question-new-comment' do
           fill_in 'comment_body', with: 'Comment text'
           click_on 'Comment'
         end

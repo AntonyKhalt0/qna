@@ -1,19 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can create answer', %q{
+feature 'User can create answer', "
   In order to give an answer to another user
   As an authenthicated user
   I'd like to be able to ask the question
-} do
-
+" do
   given(:user) { create(:user) }
   given!(:question) { create(:question, author: user) }
 
   describe 'Authenthicated user', js: true do
-
-    background do 
+    background do
       sign_in(user)
-      
+
       visit question_path(question)
     end
 
@@ -34,7 +34,7 @@ feature 'User can create answer', %q{
 
     scenario 'give a answer with attached file' do
       fill_in 'Your answer', with: 'Answer text'
-      
+
       attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_on 'Post answer'
 

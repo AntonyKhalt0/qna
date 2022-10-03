@@ -1,6 +1,15 @@
+# frozen_string_literal: true
+
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
-  
+
   root to: 'questions#index'
 
   concern :votable do
@@ -18,7 +27,8 @@ Rails.application.routes.draw do
   end
 
   resources :questions do
-    resources :answers, shallow: true, only: [:create, :update, :destroy] do
+    resources :question_subscriptions, shallow: true, only: %i[create destroy]
+    resources :answers, shallow: true, only: %i[create update destroy] do
       concerns :votable
       concerns :commentable
     end
@@ -33,6 +43,18 @@ Rails.application.routes.draw do
   resources :links, only: :destroy
   resources :awards, only: :index
   resources :accounts, only: :create
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: [:index] do
+        get :me, on: :collection
+      end
+
+      resources :questions, only: %i[index show create update destroy] do
+        resources :answers, only: %i[show create update destroy], shallow: true
+      end
+    end
+  end
 
   mount ActionCable.server => '/cable'
 end

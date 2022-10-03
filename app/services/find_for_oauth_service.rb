@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FindForOauthService
   attr_reader :auth
 
@@ -14,12 +16,11 @@ class FindForOauthService
 
     user = User.where(email: email).first
     if user
-      user.create_authorization(auth)
     else
       password = Devise.friendly_token[0, 20]
       user = User.create!(email: email, password: password, password_confirmation: password)
-      user.create_authorization(auth)
     end
+    user.create_authorization(auth)
 
     user
   end

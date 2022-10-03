@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AnswersChannel < ActionCable::Channel::Base
   def follow(data)
     stream_from "question-#{data['question_id']}-answers"
