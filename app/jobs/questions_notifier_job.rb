@@ -1,7 +1,7 @@
 class QuestionsNotifierJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    # Do something later
+  def perform(answer)
+    QuestionsNotifier.new.send_digest(answer)
   end
 end
