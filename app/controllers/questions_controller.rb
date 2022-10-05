@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show edit update update_best_answer destroy]
-  after_action :publish_question, only: [:create]
+  after_action :publish_question, only: %i[create]
 
   authorize_resource
 
@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @subscription = QuestionSubscription.where(question_id: @question.id, user_id: current_user.id).first
     gon.question_id = @question.id
     @answer = Answer.new
     @answer.links.new
@@ -36,6 +37,7 @@ class QuestionsController < ApplicationController
     @question.author = current_user
 
     if @question.save
+      QuestionSubscription.create(user: current_user, question_id: @question.id )
       redirect_to @question, notice: 'Your question successfully created.'
     else
       render :new

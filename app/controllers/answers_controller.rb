@@ -13,6 +13,7 @@ class AnswersController < ApplicationController
     @answer.author = current_user
     @answer.save
     publish_answer
+    QuestionsNotifierJob.perform_later(@answer)
   end
 
   def update

@@ -27,6 +27,7 @@ class Ability
     can :update_best_answer, Question
     can :create_comment, [Question, Answer]
     can :me, User, user_id: user.id
+    can %i[create destroy], QuestionSubscription
     can %i[upvote downvote unvote], [Question, Answer]
   end
 
