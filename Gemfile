@@ -44,6 +44,9 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 
+gem 'mysql2', platform: :ruby
+gem 'thinking-sphinx', '~> 5.4'
+
 # authentication
 gem 'devise'
 gem 'omniauth'
