@@ -44,6 +44,9 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 
+gem 'mysql2', platform: :ruby
+gem 'thinking-sphinx', '~> 5.4'
+
 # authentication
 gem 'devise'
 gem 'omniauth'
@@ -79,6 +82,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem 'webdrivers'
+  gem 'database_cleaner-active_record'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

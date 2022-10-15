@@ -1,0 +1,10 @@
+= form_with url: search_path, class: 'search-form' do |f|
+  div class='input-group'
+    = f.text_field "search_data", class: 'form-control'
+    .input-group-append
+      select name="search_type" id="search_type" type="button" class="btn dropdown-toggle"
+        option value='all' All
+        option value='question' Question
+        option value='answer' Answer
+        option value='user' User
+    = f.submit 'Search'

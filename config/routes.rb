@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'search', action: :search, controller: 'search'
+
   resources :questions do
     resources :question_subscriptions, shallow: true, only: %i[create destroy]
     resources :answers, shallow: true, only: %i[create update destroy] do
