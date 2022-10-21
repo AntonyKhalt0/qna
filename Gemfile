@@ -44,6 +44,9 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 
+# Localization
+gem 'rails-i18n', '~> 6.0.0'
+
 gem 'mysql2', platform: :ruby
 gem 'thinking-sphinx', '~> 5.4'
 

@@ -1,0 +1,13 @@
+current directory: /home/antony/qna/vendor/cache/ruby/3.0.0/gems/json-2.6.2/ext/json
+/usr/share/rvm/rubies/ruby-3.0.4/bin/ruby -I /usr/share/rvm/rubies/ruby-3.0.4/lib/ruby/3.0.0 -r ./siteconf20221021-61148-e0ja6c.rb extconf.rb
+creating Makefile
+
+current directory: /home/antony/qna/vendor/cache/ruby/3.0.0/gems/json-2.6.2/ext/json
+make DESTDIR\= clean
+
+current directory: /home/antony/qna/vendor/cache/ruby/3.0.0/gems/json-2.6.2/ext/json
+make DESTDIR\=
+make: Nothing to be done for 'all'.
+
+current directory: /home/antony/qna/vendor/cache/ruby/3.0.0/gems/json-2.6.2/ext/json
+make DESTDIR\= install
