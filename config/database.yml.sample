@@ -81,5 +81,5 @@ database: qna_test
 production:
 «: *default
 database: qna_production
-username: qna
-password: <%= ENV['QNA_DATABASE_PASSWORD'] %>
+username: postgres
+password: 'M38aqtHE4' #<%= ENV['QNA_DATABASE_PASSWORD'] %>
