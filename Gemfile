@@ -43,6 +43,7 @@ gem 'slim-rails'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
+gem 'mini_racer'
 
 # Localization
 gem 'rails-i18n', '~> 6.0.0'
