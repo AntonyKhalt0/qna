@@ -110,6 +110,9 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano-sidekiq (1.0.3)
+      capistrano (>= 3.9.0)
+      sidekiq (>= 3.4, < 6.0)
     capybara (3.37.1)
       addressable
       matrix
@@ -297,7 +300,7 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redis (4.8.0)
+    redis (4.5.1)
     regexp_parser (2.6.0)
     request_store (1.5.1)
       rack (>= 1.4)
@@ -359,10 +362,11 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (5.2.0)
       activesupport (>= 5.2.0)
-    sidekiq (6.5.7)
-      connection_pool (>= 2.2.5)
+    sidekiq (5.2.10)
+      connection_pool (~> 2.2, >= 2.2.2)
       rack (~> 2.0)
-      redis (>= 4.5.0, < 5)
+      rack-protection (>= 1.5.0)
+      redis (~> 4.5, < 4.6.0)
     sinatra (3.0.2)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
@@ -446,6 +450,7 @@ DEPENDENCIES
   capistrano-passenger
   capistrano-rails
   capistrano-rvm
+  capistrano-sidekiq
   capybara (>= 2.15)
   capybara-email
   cocoon
@@ -478,7 +483,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   shoulda-matchers
-  sidekiq
+  sidekiq (< 6)
   sinatra
   slim-rails
   spring

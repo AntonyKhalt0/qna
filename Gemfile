@@ -40,7 +40,7 @@ gem 'octicons_helper'
 gem 'oj'
 gem 'rubocop-rails', require: false
 gem 'slim-rails'
-gem 'sidekiq'
+gem 'sidekiq', ' < 6 '
 gem 'sinatra', require: false
 gem 'whenever', require: false
 gem 'mini_racer'
@@ -81,6 +81,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano-passenger', require: false
   # gem 'capistrano-postgresql', require: false
+  gem 'capistrano-sidekiq', require: false
 end
 
 group :test do
