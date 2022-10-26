@@ -64,6 +64,18 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "qna_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.default_url_options = { host: 'http://84.38.183.106' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    tls:                  true,
+    port:                 465,
+    address:              'smtp.yandex.ru',
+    domain:               'yandex.ru',
+    user_name:            Rails.application.credentials[Rails.env.to_sym][:smtp_username],
+    password:             Rails.application.credentials[Rails.env.to_sym][:smtp_password],
+    authentication:       'plain',
+    enable_starttls_auto: true
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
