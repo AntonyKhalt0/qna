@@ -42,3 +42,5 @@ yarn-debug.log*
 /config/credentials/development.key
 config/*.sphinx..conf
 db/sphinx
+
+/vendor/cache
