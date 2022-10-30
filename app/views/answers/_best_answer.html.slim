@@ -1,45 +1,46 @@
-div id="answer-body-#{@best_answer.id}"
-  h3= 'Best answer this question'
-  h4= @best_answer.body
+- cache @best_answer do
+  div id="answer-body-#{@best_answer.id}"
+    h3= 'Best answer this question'
+    h4= @best_answer.body
 
-  - @best_answer.files.each do |file|
-    p id="attachment-#{file.id}"
-      = link_to file.filename.to_s, url_for(file)
-      = ' '
-      - if can?(:edit, @best_answer)
-        = link_to attachment_path(file), method: :delete, local: false, remote: true do
-          = octicon 'x'
+    - @best_answer.files.each do |file|
+      p id="attachment-#{file.id}"
+        = link_to file.filename.to_s, url_for(file)
+        = ' '
+        - if can?(:edit, @best_answer)
+          = link_to attachment_path(file), method: :delete, local: false, remote: true do
+            = octicon 'x'
 
-  p= render 'votes/vote', resource: @best_answer
+    p= render 'votes/vote', resource: @best_answer
 
-  .links
-    = render 'links/list', resource: @best_answer
+    .links
+      = render 'links/list', resource: @best_answer
 
-  - if can?(:edit, @best_answer)
-    p
-      = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: @best_answer.id }
-      = ' | '
-      = link_to 'Delete', answer_path(@best_answer), method: :delete, local: false, remote: true, class: 'delete-answer-link', data: { answer_id: @best_answer.id }
-    
-  = form_with model: @best_answer, class: 'hidden', html: { id: "edit-answer-#{@best_answer.id}" } do |f|
-    p
-      = f.label :body, 'Your answer'
-      = f.text_area :body
-    p
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
-    p Links:
-    #links
-      = f.fields_for :links do |l|
-        = render 'links/link_fields', f: l
-      .links
-        = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
-        
-    = f.submit 'Save'
+    - if can?(:edit, @best_answer)
+      p
+        = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: @best_answer.id }
+        = ' | '
+        = link_to 'Delete', answer_path(@best_answer), method: :delete, local: false, remote: true, class: 'delete-answer-link', data: { answer_id: @best_answer.id }
 
-div class="answer-#{@best_answer.id}-comments"
-  = 'Comments:'
-  .comments
-    = render @best_answer.comments
-  - if can?(:create, Comment)
-    = render 'comments/answer_comment_form', answer: @best_answer
+    = form_with model: @best_answer, class: 'hidden', html: { id: "edit-answer-#{@best_answer.id}" } do |f|
+      p
+        = f.label :body, 'Your answer'
+        = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+      p Links:
+      #links
+        = f.fields_for :links do |l|
+          = render 'links/link_fields', f: l
+        .links
+          = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+
+      = f.submit 'Save'
+
+  div class="answer-#{@best_answer.id}-comments"
+    = 'Comments:'
+    .comments
+      = render @best_answer.comments
+    - if can?(:create, Comment)
+      = render 'comments/answer_comment_form', answer: @best_answer
