@@ -1,60 +1,61 @@
-.question
-  h1 id='question-title'= @question.title
-  p id='question-body'= @question.body
+- cache @question do
+  .question
+    h1 id='question-title'= @question.title
+    p id='question-body'= @question.body
 
-  - if can?(:edit, @question)
-    p
-      = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id } 
-      = ' | '
-      = link_to 'Delete', question_path(@question), method: :delete, remote: true, local: false
+    - if can?(:edit, @question)
+      p
+        = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
+        = ' | '
+        = link_to 'Delete', question_path(@question), method: :delete, remote: true, local: false
 
-  .subscriptions
-    = render 'question_subscriptions/subscription_links', question: @question
+    .subscriptions
+      = render 'question_subscriptions/subscription_links', question: @question
 
-  = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" }, local: false do |f|
-    p
-      = f.label :title
-      = f.text_field :title
-    p
-      = f.label :body
-      = f.text_area :body
-    p
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
-    p Links:
-    #links
-      = f.fields_for :links do |l|
-        = render 'links/link_fields', f: l
-      .links
-        = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
-  
-    = f.submit 'Save'
+    = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" }, local: false do |f|
+      p
+        = f.label :title
+        = f.text_field :title
+      p
+        = f.label :body
+        = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+      p Links:
+      #links
+        = f.fields_for :links do |l|
+          = render 'links/link_fields', f: l
+        .links
+          = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
 
-.question-files
-  - if @question.files.attached?
-    - @question.files.each do |file|
-      p id="attachment-#{file.id}"
-        = link_to file.filename.to_s, url_for(file)
-        = ' '
-        - if can?(:edit, @question)
-          = link_to attachment_path(file), method: :delete, local: false, remote: true do
-            = octicon 'x'
+      = f.submit 'Save'
 
-.links
-  = render 'links/list', resource: @question
+  .question-files
+    - if @question.files.attached?
+      - @question.files.each do |file|
+        p id="attachment-#{file.id}"
+          = link_to file.filename.to_s, url_for(file)
+          = ' '
+          - if can?(:edit, @question)
+            = link_to attachment_path(file), method: :delete, local: false, remote: true do
+              = octicon 'x'
 
-div class="question-#{@question.id}-comments"
-  = 'Comments:'
-  .comments
-    = render @question.comments
-  - if signed_in?
-    = render 'comments/question_comment_form', question: @question
+  .links
+    = render 'links/list', resource: @question
 
-.best-answer
-  = render 'answers/best_answer', resource: @best_answer if @best_answer
+  div class="question-#{@question.id}-comments"
+    = 'Comments:'
+    .comments
+      = render @question.comments
+    - if signed_in?
+      = render 'comments/question_comment_form', question: @question
 
-.answers
-  = render partial: 'answers/answer', collection: @answers
+  .best-answer
+    = render 'answers/best_answer', resource: @best_answer if @best_answer
+
+  .answers
+    = render partial: 'answers/answer', collection: @answers
 
 .question-errors
   = render 'shared/errors', resource: @question
