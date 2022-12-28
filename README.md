@@ -1,14 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is application for questions and answers
 
 Things you may want to cover:
 
 * Ruby version
 2.7.1
 
-Rails version
+* Rails version
 6.0.5
 
 * Database
